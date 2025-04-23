@@ -23,20 +23,31 @@ class MainWindow(QMainWindow):
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
-        # Main layout
+        # Main layout - reduce spacing and margins
         main_layout = QVBoxLayout(central_widget)
+        main_layout.setContentsMargins(10, 10, 10, 10)  # Reduce margins
+        main_layout.setSpacing(5)  # Reduce spacing between components
 
-        # Title label
+        # Title label - make more compact
         title_label = QLabel("File Tree Generator")
         title_label.setAlignment(Qt.AlignCenter)
         font = title_label.font()
-        font.setPointSize(14)
+        font.setPointSize(12)  # Smaller font
         font.setBold(True)
         title_label.setFont(font)
+        title_label.setMaximumHeight(30)  # Limit height
 
-        # Directory selection
+        # Directory path section - make more compact
+        dir_section = QWidget()
+        dir_layout = QVBoxLayout(dir_section)
+        dir_layout.setContentsMargins(0, 0, 0, 0)  # No margins
+        dir_layout.setSpacing(2)  # Minimal spacing
+
         dir_label = QLabel("Directory Path:")
         self.address_bar = AddressBar()
+
+        dir_layout.addWidget(dir_label)
+        dir_layout.addWidget(self.address_bar)
 
         # Splitter for main content
         splitter = QSplitter(Qt.Horizontal)
@@ -44,7 +55,8 @@ class MainWindow(QMainWindow):
         # Left side: Tree view and search panel
         left_widget = QWidget()
         left_layout = QVBoxLayout(left_widget)
-        left_layout.setContentsMargins(0, 0, 0, 0)
+        left_layout.setContentsMargins(0, 0, 0, 0)  # No margins
+        left_layout.setSpacing(5)  # Reduced spacing
 
         # Search panel
         self.search_panel = SearchPanel()
@@ -59,7 +71,8 @@ class MainWindow(QMainWindow):
         # Right side: Exclusion panel
         right_widget = QWidget()
         right_layout = QVBoxLayout(right_widget)
-        right_layout.setContentsMargins(0, 0, 0, 0)
+        right_layout.setContentsMargins(0, 0, 0, 0)  # No margins
+        right_layout.setSpacing(5)  # Reduced spacing
 
         self.exclusion_panel = ExclusionPanel()
         right_layout.addWidget(self.exclusion_panel)
@@ -71,8 +84,13 @@ class MainWindow(QMainWindow):
         splitter.setStretchFactor(0, 3)  # Left side gets more space
         splitter.setStretchFactor(1, 1)
 
-        # Export panel
+        # Export panel - make compact
+        export_container = QWidget()
+        export_layout = QHBoxLayout(export_container)
+        export_layout.setContentsMargins(0, 0, 0, 0)  # No margins
+
         self.export_panel = ExportPanel()
+        export_layout.addWidget(self.export_panel)
 
         # Status bar
         self.status_bar = QStatusBar()
@@ -80,10 +98,9 @@ class MainWindow(QMainWindow):
 
         # Add widgets to layout
         main_layout.addWidget(title_label)
-        main_layout.addWidget(dir_label)
-        main_layout.addWidget(self.address_bar)
-        main_layout.addWidget(splitter)
-        main_layout.addWidget(self.export_panel)
+        main_layout.addWidget(dir_section)
+        main_layout.addWidget(splitter, 1)  # Give the splitter stretch priority
+        main_layout.addWidget(export_container)
 
         # Connect search signals
         self.search_panel.search_requested.connect(self.tree_view.highlight_search_results)

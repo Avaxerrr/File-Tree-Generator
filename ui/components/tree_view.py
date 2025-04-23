@@ -1,8 +1,7 @@
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QTextEdit,
-                               QHBoxLayout, QRadioButton, QGroupBox,
-                               QLabel, QFontComboBox, QSpinBox)
-from PySide6.QtGui import QFont, QTextCharFormat, QColor, QBrush, QTextCursor
-from PySide6.QtCore import Qt
+                            QHBoxLayout, QRadioButton, QGroupBox,
+                            QLabel, QFontComboBox, QSpinBox)
+from PySide6.QtGui import QFont, QTextCharFormat, QColor, QBrush, QTextCursor, QTextDocument
 
 
 class TreeView(QWidget):
@@ -95,9 +94,9 @@ class TreeView(QWidget):
         cursor = QTextCursor(doc)
 
         # Set case sensitivity
-        flags = QTextCursor.FindFlag(0)  # No flags initially
+        flags = QTextDocument.FindFlags()  # No flags initially
         if case_sensitive:
-            flags |= QTextCursor.FindFlag.FindCaseSensitively
+            flags |= QTextDocument.FindFlag.FindCaseSensitively
 
         match_count = 0
 
@@ -120,6 +119,7 @@ class TreeView(QWidget):
             cursor = doc.find(search_text, 0, flags)
             if not cursor.isNull():
                 self.tree_display.setTextCursor(cursor)
+                self.tree_display.ensureCursorVisible()
 
         # Show match count in status bar
         self.window().statusBar().showMessage(f"Found {match_count} matches")

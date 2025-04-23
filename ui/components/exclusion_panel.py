@@ -20,7 +20,7 @@ class ExclusionPanel(QWidget):
 
         # Use common exclusions checkbox
         self.common_exclusions_cb = QCheckBox("Use common exclusions")
-        self.common_exclusions_cb.setChecked(True)
+        self.common_exclusions_cb.setChecked(False)
         self.common_exclusions_cb.toggled.connect(self._on_exclusions_changed)
         group_layout.addWidget(self.common_exclusions_cb)
 
