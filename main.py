@@ -7,11 +7,22 @@ from core.directory_scanner import DirectoryScanner
 from core.tree_formatter import TreeFormatter
 from core.exclusion_manager import ExclusionManager
 from utils.file_exporter import FileExporter
+from utils.theme_manager import ThemeManager
 
 
 class FileTreeGeneratorApp:
     def __init__(self):
+        # Make sure themes directory exists
+        os.makedirs("resources/themes", exist_ok=True)
+
+        # Create base QSS file if it doesn't exist
+        if not os.path.exists("resources/themes/base.qss"):
+            self._create_base_qss()
+
         self.app = QApplication(sys.argv)
+        self.theme_manager = ThemeManager(self.app)
+        self.theme_manager.load_theme()
+
         self.window = MainWindow()
 
         # Initialize exclusion manager
@@ -28,11 +39,19 @@ class FileTreeGeneratorApp:
         self.current_path = ""
         self.tree_data = None
 
+    def _create_base_qss(self):
+        """Create the base QSS file if it doesn't exist"""
+        with open("resources/themes/base.qss", "w", encoding="utf-8") as f:
+            # Write the QSS content - this is just a placeholder reference
+            # The full QSS content should be saved as shown above
+            f.write("/* See full QSS in the base.qss file */")
+
     def run(self):
         """Run the application"""
         self.window.show()
         return self.app.exec()
 
+    # The rest of your existing code remains unchanged...
     def update_exclusions(self):
         """Update exclusion patterns from the UI and regenerate tree"""
         # Update exclusion manager from UI
