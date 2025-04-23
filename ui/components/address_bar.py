@@ -1,0 +1,54 @@
+from PySide6.QtWidgets import (QWidget, QHBoxLayout, QLineEdit,
+                               QPushButton, QFileDialog)
+from PySide6.QtCore import Signal
+
+
+class AddressBar(QWidget):
+    path_changed = Signal(str)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setup_ui()
+
+    def setup_ui(self):
+        layout = QHBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        # Path input field
+        self.path_input = QLineEdit()
+        self.path_input.setPlaceholderText("Enter directory path...")
+        self.path_input.returnPressed.connect(self._on_path_changed)
+
+        # Browse button
+        self.browse_button = QPushButton("Browse...")
+        self.browse_button.clicked.connect(self._open_file_dialog)
+
+        # Add widgets to layout
+        layout.addWidget(self.path_input)
+        layout.addWidget(self.browse_button)
+
+    def get_path(self) -> str:
+        """Get the current path from the input field"""
+        return self.path_input.text()
+
+    def set_path(self, path: str):
+        """Set the path in the input field"""
+        self.path_input.setText(path)
+        self._on_path_changed()
+
+    def _open_file_dialog(self):
+        """Open a file dialog to select a directory"""
+        directory = QFileDialog.getExistingDirectory(
+            self, "Select Directory",
+            self.path_input.text() or "."
+        )
+
+        if directory:
+            self.path_input.setText(directory)
+            self._on_path_changed()
+
+    def _on_path_changed(self):
+        """Emit a signal when the path changes"""
+        path = self.path_input.text()
+        if path:
+            self.path_changed.emit(path)
