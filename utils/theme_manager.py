@@ -1,21 +1,25 @@
 # theme_manager.py
 
+from PySide6.QtCore import QFile, QTextStream
+
 class ThemeManager:
-    def __init__(self, app, base_qss_path=None):
+    def __init__(self, app, base_qss_path=":/resources/themes/base.qss"):
         self.app = app
         self.current_theme = None
-        if base_qss_path is not None:
-            self.base_qss_path = base_qss_path
-        else:
-            self.base_qss_path = "resources/themes/base.qss"
+        self.base_qss_path = base_qss_path
 
     def load_theme(self):
         try:
-            with open(self.base_qss_path, "r", encoding="utf-8") as f:
-                qss = f.read()
-            self.app.setStyleSheet(qss)
-            self.current_theme = "base"
-            return True
+            file = QFile(self.base_qss_path)
+            if file.open(QFile.ReadOnly | QFile.Text):
+                stream = QTextStream(file)
+                qss = stream.readAll()
+                self.app.setStyleSheet(qss)
+                self.current_theme = "base"
+                return True
+            else:
+                print(f"Failed to open QSS file: {self.base_qss_path}")
+                return False
         except Exception as e:
             print(f"Failed to load theme: {e}")
             return False

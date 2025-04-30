@@ -1,3 +1,5 @@
+# context_menu_manager.py
+
 import sys
 import os
 import winreg

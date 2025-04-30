@@ -1,6 +1,4 @@
 # address_bar.py
-import os
-import sys
 
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QLineEdit, QPushButton, QFileDialog
 from PySide6.QtGui import QIcon
@@ -8,18 +6,11 @@ from PySide6.QtCore import Signal
 
 class AddressBar(QWidget):
     path_changed = Signal(str)
-    refresh_requested = Signal()  # New signal for refresh button
+    refresh_requested = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setup_ui()
-
-    def _resource_path(self, relative_path):
-        try:
-            base_path = sys._MEIPASS
-        except AttributeError:
-            base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-        return os.path.join(base_path, relative_path)
 
     def setup_ui(self):
         layout = QHBoxLayout(self)
@@ -34,10 +25,8 @@ class AddressBar(QWidget):
         self.browse_button = QPushButton("Browse...")
         self.browse_button.clicked.connect(self._open_file_dialog)
 
-        # Refresh button
-        refresh_icon_path = self._resource_path("resources/refresh.png")
         self.refresh_button = QPushButton()
-        self.refresh_button.setIcon(QIcon(refresh_icon_path))
+        self.refresh_button.setIcon(QIcon(":/resources/refresh.png"))
         self.refresh_button.setToolTip("Refresh")
         self.refresh_button.clicked.connect(self._on_refresh_clicked)
 
@@ -61,7 +50,6 @@ class AddressBar(QWidget):
             self, "Select Directory",
             self.path_input.text() or "."
         )
-
         if directory:
             self.path_input.setText(directory)
             self._on_path_changed()

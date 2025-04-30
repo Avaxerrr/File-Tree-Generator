@@ -1,0 +1,7 @@
+<!DOCTYPE RCC><RCC version="1.0">
+<qresource prefix="/">
+    <file>resources/themes/base.qss</file>
+    <file>resources/file_tree.png</file>
+    <file>resources/refresh.png</file>
+</qresource>
+</RCC>

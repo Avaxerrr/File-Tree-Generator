@@ -11,14 +11,17 @@ File Tree Generator/
 |    |    \--- base.qss
 |    |
 |    +--- __init__.py
-|    \--- file_tree.png
+|    +--- file_tree.png
+|    \--- refresh.png
 |
 +--- ui
 |    +--- components
 |    |    +--- __init__.py
+|    |    +--- about_dialog.py
 |    |    +--- address_bar.py
 |    |    +--- exclusion_panel.py
 |    |    +--- export_panel.py
+|    |    +--- menu_bar.py
 |    |    +--- search_panel.py
 |    |    \--- tree_view.py
 |    |
@@ -27,9 +30,10 @@ File Tree Generator/
 |
 +--- utils
 |    +--- __init__.py
+|    +--- context_menu_manager.py
 |    +--- file_exporter.py
 |    \--- theme_manager.py
 |
-+--- create_context_menu.py
-+--- main.py
-\--- remove_context_menu.py
++--- file structure.txt
++--- file_tree.ico
+\--- main.py

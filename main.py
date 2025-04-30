@@ -1,7 +1,7 @@
 # main.py
 
-import sys
 import os
+import sys
 from PySide6.QtWidgets import QApplication
 from PySide6.QtGui import QIcon
 
@@ -11,25 +11,15 @@ from core.tree_formatter import TreeFormatter
 from core.exclusion_manager import ExclusionManager
 from utils.file_exporter import FileExporter
 from utils.theme_manager import ThemeManager
+import resources_rc
 
 class FileTreeGeneratorApp:
     def __init__(self):
-        # Always resolve resource paths relative to the executable location
-        self.base_qss_path = self._resource_path("resources/themes/base.qss")
-        self.theme_dir = os.path.dirname(self.base_qss_path)
-
-        # Make sure themes directory exists at the correct location
-        os.makedirs(self.theme_dir, exist_ok=True)
-
-        # Create base QSS file if it doesn't exist
-        if not os.path.exists(self.base_qss_path):
-            self._create_base_qss()
-
         self.app = QApplication(sys.argv)
         self._set_app_icon()
 
-        # Pass the absolute QSS path to the ThemeManager
-        self.theme_manager = ThemeManager(self.app, base_qss_path=self.base_qss_path)
+        # Use the embedded QSS resource path
+        self.theme_manager = ThemeManager(self.app, base_qss_path=":/resources/themes/base.qss")
         self.theme_manager.load_theme()
 
         self.window = MainWindow()
@@ -49,28 +39,9 @@ class FileTreeGeneratorApp:
         self.current_path = ""
         self.tree_data = None
 
-    def _create_base_qss(self):
-        """Create the base QSS file if it doesn't exist"""
-        with open(self.base_qss_path, "w", encoding="utf-8") as f:
-            f.write("/* See full QSS in the base.qss file */")
-
-    def _resource_path(self, relative_path):
-        """
-        Get absolute path to resource, works for dev and for PyInstaller/Nuitka bundle.
-        """
-        try:
-            # Nuitka or PyInstaller creates a temp folder and stores path in _MEIPASS
-            base_path = sys._MEIPASS
-        except AttributeError:
-            base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
-        return os.path.join(base_path, relative_path)
-
     def _set_app_icon(self):
-        """Set the application icon from resources/filetree.png"""
-        icon_path = self._resource_path("resources/file_tree.png")
-        if os.path.exists(icon_path):
-            self.app.setWindowIcon(QIcon(icon_path))
-        # Optionally, else: print warning if icon not found
+        """Set the application icon from embedded resources"""
+        self.app.setWindowIcon(QIcon(":/resources/file_tree.png"))
 
     def run(self):
         """Run the application"""
@@ -85,7 +56,6 @@ class FileTreeGeneratorApp:
                 # Set the path in the address bar and generate tree
                 self.window.address_bar.set_path(folder_path)
 
-    # The rest of your existing code remains unchanged...
     def update_exclusions(self):
         """Update exclusion patterns from the UI and regenerate tree"""
         # Update exclusion manager from UI
@@ -165,7 +135,6 @@ class FileTreeGeneratorApp:
         else:
             self.window.export_panel.show_export_error("Failed to write to file")
             self.window.set_status("Export failed")
-
 
 if __name__ == "__main__":
     app = FileTreeGeneratorApp()
