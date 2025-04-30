@@ -5,6 +5,7 @@ File Tree Generator/
 |    +--- exclusion_manager.py
 |    \--- tree_formatter.py
 |
++--- exe
 +--- resources
 |    +--- themes
 |    |    +--- __init__.py
@@ -36,4 +37,6 @@ File Tree Generator/
 |
 +--- file structure.txt
 +--- file_tree.ico
-\--- main.py
++--- main.py
++--- resources.qrc
+\--- resources_rc.py
