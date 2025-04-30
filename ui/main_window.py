@@ -2,7 +2,7 @@
 
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout,
                                QLabel, QStatusBar, QSplitter,
-                               QHBoxLayout)
+                               QHBoxLayout, QMessageBox)
 from PySide6.QtCore import Qt
 
 from .components.address_bar import AddressBar
@@ -12,6 +12,7 @@ from .components.search_panel import SearchPanel
 from .components.exclusion_panel import ExclusionPanel
 from .components.menu_bar import MenuBar
 from .components.about_dialog import AboutDialog
+from utils.context_menu_manager import install_context_menu, uninstall_context_menu
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -34,15 +35,6 @@ class MainWindow(QMainWindow):
         main_layout = QVBoxLayout(central_widget)
         main_layout.setContentsMargins(10, 10, 10, 10)
         main_layout.setSpacing(5)
-
-        # Title label - make more compact
-        """"title_label = QLabel("File Tree Generator")
-        title_label.setAlignment(Qt.AlignCenter)
-        font = title_label.font()
-        font.setPointSize(12)
-        font.setBold(True)
-        title_label.setFont(font)
-        title_label.setMaximumHeight(30)"""
 
         # Directory path section
         dir_section = QWidget()
@@ -100,7 +92,6 @@ class MainWindow(QMainWindow):
         self.setStatusBar(self.status_bar)
 
         # Add widgets to layout
-        #main_layout.addWidget(title_label)
         main_layout.addWidget(dir_section)
         main_layout.addWidget(splitter, 1)
         main_layout.addWidget(export_container)
@@ -124,9 +115,11 @@ class MainWindow(QMainWindow):
         about_dialog.exec()
 
     def _on_install_context_menu(self):
-        # Placeholder for install context menu logic
-        pass
+        success, message = install_context_menu()
+        self.set_status(message)
+        QMessageBox.information(self, "Context Menu Installation", message if success else f"Error: {message}")
 
     def _on_uninstall_context_menu(self):
-        # Placeholder for uninstall context menu logic
-        pass
+        success, message = uninstall_context_menu()
+        self.set_status(message)
+        QMessageBox.information(self, "Context Menu Removal", message if success else f"Error: {message}")

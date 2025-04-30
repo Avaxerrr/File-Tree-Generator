@@ -14,17 +14,22 @@ from utils.theme_manager import ThemeManager
 
 class FileTreeGeneratorApp:
     def __init__(self):
-        # Make sure themes directory exists
-        os.makedirs("resources/themes", exist_ok=True)
+        # Always resolve resource paths relative to the executable location
+        self.base_qss_path = self._resource_path("resources/themes/base.qss")
+        self.theme_dir = os.path.dirname(self.base_qss_path)
+
+        # Make sure themes directory exists at the correct location
+        os.makedirs(self.theme_dir, exist_ok=True)
 
         # Create base QSS file if it doesn't exist
-        if not os.path.exists("resources/themes/base.qss"):
+        if not os.path.exists(self.base_qss_path):
             self._create_base_qss()
 
         self.app = QApplication(sys.argv)
         self._set_app_icon()
 
-        self.theme_manager = ThemeManager(self.app)
+        # Pass the absolute QSS path to the ThemeManager
+        self.theme_manager = ThemeManager(self.app, base_qss_path=self.base_qss_path)
         self.theme_manager.load_theme()
 
         self.window = MainWindow()
@@ -34,7 +39,7 @@ class FileTreeGeneratorApp:
 
         # Connect signals
         self.window.address_bar.path_changed.connect(self.generate_tree)
-        self.window.address_bar.refresh_requested.connect(self.refresh_tree)  # Connect refresh
+        self.window.address_bar.refresh_requested.connect(self.refresh_tree)
         self.window.tree_view.ascii_radio.toggled.connect(self.update_tree_format)
         self.window.tree_view.box_drawing_radio.toggled.connect(self.update_tree_format)
         self.window.export_panel.export_requested.connect(self.export_tree)
@@ -46,7 +51,7 @@ class FileTreeGeneratorApp:
 
     def _create_base_qss(self):
         """Create the base QSS file if it doesn't exist"""
-        with open("resources/themes/base.qss", "w", encoding="utf-8") as f:
+        with open(self.base_qss_path, "w", encoding="utf-8") as f:
             f.write("/* See full QSS in the base.qss file */")
 
     def _resource_path(self, relative_path):
@@ -57,7 +62,7 @@ class FileTreeGeneratorApp:
             # Nuitka or PyInstaller creates a temp folder and stores path in _MEIPASS
             base_path = sys._MEIPASS
         except AttributeError:
-            base_path = os.path.abspath(".")
+            base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
         return os.path.join(base_path, relative_path)
 
     def _set_app_icon(self):
@@ -164,5 +169,5 @@ class FileTreeGeneratorApp:
 
 if __name__ == "__main__":
     app = FileTreeGeneratorApp()
-    app.process_command_line()  # Process command line arguments
+    app.process_command_line()
     sys.exit(app.run())
