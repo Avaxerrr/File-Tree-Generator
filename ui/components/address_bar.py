@@ -32,7 +32,7 @@ class AddressBar(QWidget):
         return self.path_input.text()
 
     def set_path(self, path: str):
-        """Set the path in the input field"""
+        """Set the path in the input field and trigger path changed signal"""
         self.path_input.setText(path)
         self._on_path_changed()
 

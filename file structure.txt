@@ -1,0 +1,35 @@
+File Tree Generator/
++--- core
+|    +--- __init__.py
+|    +--- directory_scanner.py
+|    +--- exclusion_manager.py
+|    \--- tree_formatter.py
+|
++--- resources
+|    +--- themes
+|    |    +--- __init__.py
+|    |    \--- base.qss
+|    |
+|    +--- __init__.py
+|    \--- file_tree.png
+|
++--- ui
+|    +--- components
+|    |    +--- __init__.py
+|    |    +--- address_bar.py
+|    |    +--- exclusion_panel.py
+|    |    +--- export_panel.py
+|    |    +--- search_panel.py
+|    |    \--- tree_view.py
+|    |
+|    +--- __init__.py
+|    \--- main_window.py
+|
++--- utils
+|    +--- __init__.py
+|    +--- file_exporter.py
+|    \--- theme_manager.py
+|
++--- create_context_menu.py
++--- main.py
+\--- remove_context_menu.py

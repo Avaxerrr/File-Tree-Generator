@@ -1,4 +1,4 @@
-# theme_manager.py module
+# theme_manager.py
 
 class ThemeManager:
     def __init__(self, app):

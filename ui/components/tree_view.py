@@ -1,3 +1,5 @@
+# tree_view.py
+
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QTextEdit,
                             QHBoxLayout, QRadioButton, QGroupBox,
                             QLabel, QFontComboBox, QSpinBox)

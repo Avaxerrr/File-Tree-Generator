@@ -1,3 +1,5 @@
+#search_panel.py
+
 from PySide6.QtWidgets import (QWidget, QHBoxLayout, QLineEdit,
                                QPushButton, QCheckBox, QLabel)
 from PySide6.QtCore import Signal

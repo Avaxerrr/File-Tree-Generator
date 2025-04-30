@@ -51,6 +51,14 @@ class FileTreeGeneratorApp:
         self.window.show()
         return self.app.exec()
 
+    def process_command_line(self):
+        """Process command line arguments if any"""
+        if len(sys.argv) > 1:
+            folder_path = sys.argv[1]
+            if os.path.isdir(folder_path):
+                # Set the path in the address bar and generate tree
+                self.window.address_bar.set_path(folder_path)
+
     # The rest of your existing code remains unchanged...
     def update_exclusions(self):
         """Update exclusion patterns from the UI and regenerate tree"""
@@ -129,4 +137,5 @@ class FileTreeGeneratorApp:
 
 if __name__ == "__main__":
     app = FileTreeGeneratorApp()
+    app.process_command_line()  # Process command line arguments
     sys.exit(app.run())
