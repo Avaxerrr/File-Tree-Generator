@@ -8,6 +8,58 @@ QWidget {
     font-size: 10pt;
 }
 
+/* Menu Bar Styling */
+QMenuBar {
+    background-color: #242424;
+    color: #e0e0e0;
+}
+
+QMenuBar::item {
+    background: transparent;
+    padding: 6px 16px;
+    margin: 0px 2px;
+    border-radius: 4px;
+}
+
+QMenuBar::item:selected {
+    background: #302F2F;
+    color: #ffffff;
+}
+
+QMenuBar::item:pressed {
+    background: #2D2D2D;
+    color: #D8D8D8;
+}
+
+/* QMenu (Dropdown) Styling */
+QMenu {
+    background-color: #303030;
+}
+
+QMenu::item {
+    background-color: transparent;
+    color: #e0e0e0;
+    padding: 6px 24px 6px 24px;
+    border-radius: 4px;
+    min-width: 160px;
+}
+
+QMenu::item:selected {
+    background-color: #5a9bd4;
+    color: #ffffff;
+}
+
+QMenu::item:disabled {
+    color: #A0A0A0;
+    background-color: transparent;
+}
+
+QMenu::separator {
+    height: 1px;
+    background: #3a3a3a;
+    margin: 4px 8px 4px 8px;
+}
+
 /* QPushButton styling */
 QPushButton {
     background-color: #1e1e1e;
