@@ -1,6 +1,9 @@
+# main.py
+
 import sys
 import os
 from PySide6.QtWidgets import QApplication
+from PySide6.QtGui import QIcon
 
 from ui.main_window import MainWindow
 from core.directory_scanner import DirectoryScanner
@@ -8,7 +11,6 @@ from core.tree_formatter import TreeFormatter
 from core.exclusion_manager import ExclusionManager
 from utils.file_exporter import FileExporter
 from utils.theme_manager import ThemeManager
-
 
 class FileTreeGeneratorApp:
     def __init__(self):
@@ -20,6 +22,8 @@ class FileTreeGeneratorApp:
             self._create_base_qss()
 
         self.app = QApplication(sys.argv)
+        self._set_app_icon()
+
         self.theme_manager = ThemeManager(self.app)
         self.theme_manager.load_theme()
 
@@ -42,9 +46,25 @@ class FileTreeGeneratorApp:
     def _create_base_qss(self):
         """Create the base QSS file if it doesn't exist"""
         with open("resources/themes/base.qss", "w", encoding="utf-8") as f:
-            # Write the QSS content - this is just a placeholder reference
-            # The full QSS content should be saved as shown above
             f.write("/* See full QSS in the base.qss file */")
+
+    def _resource_path(self, relative_path):
+        """
+        Get absolute path to resource, works for dev and for PyInstaller/Nuitka bundle.
+        """
+        try:
+            # Nuitka or PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
+
+    def _set_app_icon(self):
+        """Set the application icon from resources/filetree.png"""
+        icon_path = self._resource_path("resources/file_tree.png")
+        if os.path.exists(icon_path):
+            self.app.setWindowIcon(QIcon(icon_path))
+        # Optionally, else: print warning if icon not found
 
     def run(self):
         """Run the application"""
@@ -122,7 +142,6 @@ class FileTreeGeneratorApp:
     def export_tree(self, file_path: str):
         """Export the tree to a file"""
         content = self.window.tree_view.get_tree_content()
-
         if not content:
             self.window.export_panel.show_export_error("No tree content to export")
             return
