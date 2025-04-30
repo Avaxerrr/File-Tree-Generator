@@ -34,7 +34,7 @@ class ExclusionManager:
         """Get the set of common exclusion patterns"""
         return {
             ".git", ".github", ".gitignore", ".idea", ".vscode",
-            "__pycache__", "venv", "node_modules", "build", "dist",
+            "__pycache__", ".venv", "node_modules", "build", "dist",
             "*.pyc", "*.pyo", "*.pyd", "*.so", "*.dll", "*.exe",
             "*.obj", "*.o", "*.a", "*.lib", "*.out", "*.log",
             ".DS_Store", "Thumbs.db"

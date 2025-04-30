@@ -22,6 +22,14 @@ class ExclusionPanel(QWidget):
 
         # Use common exclusions checkbox
         self.common_exclusions_cb = QCheckBox("Use common exclusions")
+        self.common_exclusions_cb.setToolTip("""
+        .git, .github, .gitignore, .idea, .vscode,
+        __pycache__, .venv, node_modules, build, dist,
+        *.pyc, *.pyo, *.pyd, *.so, *.dll, *.exe,
+        *.obj, *.o, *.a, *.lib, *.out, *.log,
+        .DS_Store, Thumbs.db
+        """)
+
         self.common_exclusions_cb.setChecked(False)
         self.common_exclusions_cb.toggled.connect(self._on_exclusions_changed)
         group_layout.addWidget(self.common_exclusions_cb)

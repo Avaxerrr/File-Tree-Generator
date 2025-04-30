@@ -34,6 +34,7 @@ class FileTreeGeneratorApp:
 
         # Connect signals
         self.window.address_bar.path_changed.connect(self.generate_tree)
+        self.window.address_bar.refresh_requested.connect(self.refresh_tree)  # Connect refresh
         self.window.tree_view.ascii_radio.toggled.connect(self.update_tree_format)
         self.window.tree_view.box_drawing_radio.toggled.connect(self.update_tree_format)
         self.window.export_panel.export_requested.connect(self.export_tree)
@@ -138,6 +139,13 @@ class FileTreeGeneratorApp:
                 search_text,
                 self.window.search_panel.case_sensitive.isChecked()
             )
+
+    def refresh_tree(self):
+        """Re-scan the current directory using the current path and settings."""
+        if self.current_path:
+            self.generate_tree(self.current_path)
+        else:
+            self.window.set_status("No directory selected to refresh.")
 
     def export_tree(self, file_path: str):
         """Export the tree to a file"""
