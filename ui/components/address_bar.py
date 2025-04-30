@@ -1,4 +1,6 @@
 # address_bar.py
+import os
+import sys
 
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QLineEdit, QPushButton, QFileDialog
 from PySide6.QtGui import QIcon
@@ -11,6 +13,13 @@ class AddressBar(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setup_ui()
+
+    def _resource_path(self, relative_path):
+        try:
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.dirname(os.path.abspath(sys.argv[0]))
+        return os.path.join(base_path, relative_path)
 
     def setup_ui(self):
         layout = QHBoxLayout(self)
@@ -26,8 +35,9 @@ class AddressBar(QWidget):
         self.browse_button.clicked.connect(self._open_file_dialog)
 
         # Refresh button
+        refresh_icon_path = self._resource_path("resources/refresh.png")
         self.refresh_button = QPushButton()
-        self.refresh_button.setIcon(QIcon("resources/refresh.png"))
+        self.refresh_button.setIcon(QIcon(refresh_icon_path))
         self.refresh_button.setToolTip("Refresh")
         self.refresh_button.clicked.connect(self._on_refresh_clicked)
 
