@@ -4,10 +4,9 @@ A modern, cross-platform tool for generating and exporting directory trees with 
 
 ![image](https://github.com/user-attachments/assets/43a8d52c-c293-48c3-a9be-18a3607f6a82)
 
-## Features
-
 - **Directory Scanning**: Visualize any folder as a tree structure.
 - **Exclusion Patterns**: Exclude files or folders using patterns.
+- **Automatic Exclusion Saving**: Exclusions and settings are saved and loaded automatically.
 - **Customizable Formatting**: Switch between ASCII and box-drawing styles.
 - **Export**: Save the tree to a text file.
 - **Search**: Quickly find and highlight files or folders in the tree.
@@ -16,6 +15,7 @@ A modern, cross-platform tool for generating and exporting directory trees with 
 
 - Select a folder using the address bar.
 - Add exclusion patterns to skip files/folders.
+- Exclusions and settings are saved automatically.
 - Switch between ASCII and box-drawing formats.
 - Search for files/folders in the tree.
 - Export the tree to a text file.

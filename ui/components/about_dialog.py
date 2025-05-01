@@ -2,14 +2,14 @@
 
 # v1.0.0
 
-from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QTextBrowser, QSpacerItem, QSizePolicy
+from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QTextBrowser
 from PySide6.QtCore import Qt
 
 class AboutDialog(QDialog):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setWindowTitle("About File Tree Generator")
-        self.setFixedSize(420, 370)
+        self.setFixedSize(420, 430)
         self._setup_ui()
 
     def _setup_ui(self):
@@ -30,8 +30,9 @@ class AboutDialog(QDialog):
         author_label.setOpenExternalLinks(True)
 
         desc_label = QLabel(
-            "File Tree Generator is a modern tool for visualizing, searching, and exporting directory trees.<br>"
-            "Easily exclude files or folders, switch between ASCII and box-drawing styles, and export your results."
+            "File Tree Generator is a modern tool for visualizing, searching, and exporting directory trees.<br><br>"
+            "Easily exclude files or folders, switch between ASCII and box-drawing styles, and export your results.<br><br>"
+            "Exclusions and settings are saved automatically."
         )
         desc_label.setWordWrap(True)
         desc_label.setAlignment(Qt.AlignCenter)
@@ -46,8 +47,7 @@ class AboutDialog(QDialog):
         github_repo.setAlignment(Qt.AlignCenter)
         github_repo.setOpenExternalLinks(True)
 
-        # More spacing before attribution
-        layout.addSpacing(8)
+        layout.addSpacing(10)
 
         icon_attribution = QTextBrowser()
         icon_attribution.setOpenExternalLinks(True)
