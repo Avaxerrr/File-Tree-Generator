@@ -1,6 +1,6 @@
 # context_menu_manager.py
 
-# v0.7
+# v1.0.0
 
 import sys
 import os

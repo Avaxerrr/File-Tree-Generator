@@ -1,6 +1,6 @@
 #exclusion_manager.py
 
-# v0.7
+# v1.0.0
 
 import re
 from typing import Set

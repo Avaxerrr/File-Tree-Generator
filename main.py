@@ -1,6 +1,6 @@
 # main.py
 
-# v0.7
+# v1.0.0
 
 
 import os
@@ -99,22 +99,18 @@ class FileTreeGeneratorApp:
         """Save current exclusions and checkbox state to config.json"""
         patterns = self.window.exclusion_panel.get_exclusion_patterns()
         use_common = self.window.exclusion_panel.use_common_exclusions()
-        print(f"[LOG] Saving exclusion config: {len(patterns)} patterns, use_common={use_common}")
         save_exclusion_config(patterns, use_common)
-        print("[LOG] Exclusion config saved successfully.")
 
     def update_exclusions(self):
         """Update exclusion patterns from the UI and regenerate tree"""
         # Update exclusion manager from UI
         self.exclusion_manager.clear_patterns()
         patterns = self.window.exclusion_panel.get_exclusion_patterns()
-        print(f"[LOG] Updating exclusions: {len(patterns)} patterns")
         for pattern in patterns:
             self.exclusion_manager.add_pattern(pattern)
 
         # Set common exclusions setting
         use_common = self.window.exclusion_panel.use_common_exclusions()
-        print(f"[LOG] Use common exclusions: {use_common}")
         self.exclusion_manager.set_use_common_exclusions(use_common)
 
         # Save exclusions immediately on change

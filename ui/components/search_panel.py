@@ -1,6 +1,6 @@
 #search_panel.py
 
-# v0.7
+# v1.0.0
 
 from PySide6.QtWidgets import (QWidget, QHBoxLayout, QLineEdit,
                                QPushButton, QCheckBox, QLabel)

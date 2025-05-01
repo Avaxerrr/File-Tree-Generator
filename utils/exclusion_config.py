@@ -1,3 +1,7 @@
+# exclusion_config.py
+
+# v1.0.0
+
 import os
 import json
 import sys

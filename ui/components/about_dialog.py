@@ -1,6 +1,6 @@
 # about_dialog.py
 
-# v0.7
+# v1.0.0
 
 from PySide6.QtWidgets import QDialog, QVBoxLayout, QLabel, QPushButton, QTextBrowser, QSpacerItem, QSizePolicy
 from PySide6.QtCore import Qt

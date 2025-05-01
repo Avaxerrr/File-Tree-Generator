@@ -1,6 +1,6 @@
 # file_exporter.py
 
-# v0.7
+# v1.0.0
 
 import os
 

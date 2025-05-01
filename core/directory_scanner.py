@@ -1,6 +1,6 @@
 # directory_scanner.py
 
-# v0.7
+# v1.0.0
 
 import os
 from pathlib import Path
