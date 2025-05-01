@@ -1,9 +1,12 @@
 # main.py
 
+# v0.7
+
+
 import os
 import sys
 from PySide6.QtWidgets import QApplication
-from PySide6.QtGui import QIcon
+from PySide6.QtGui import QIcon, QFont, QFontDatabase
 
 from ui.main_window import MainWindow
 from core.directory_scanner import DirectoryScanner
@@ -17,6 +20,24 @@ class FileTreeGeneratorApp:
     def __init__(self):
         self.app = QApplication(sys.argv)
         self._set_app_icon()
+
+        # ---- Global font setup (from qrc) ----
+        # Make sure the font is listed in your resources.qrc, e.g.:
+        # <file>resources/Sora-VariableFont_wght.ttf</file>
+        font_id = QFontDatabase.addApplicationFont(":/resources/Sora-VariableFont_wght.ttf")
+        if font_id != -1:
+            families = QFontDatabase.applicationFontFamilies(font_id)
+            if families:
+                font_family = families[0]
+                font = QFont(font_family)
+                font.setStyleStrategy(QFont.StyleStrategy.PreferAntialias)
+                font.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
+                self.app.setFont(font)
+            else:
+                print("No families found in font file.")
+        else:
+            print("Failed to load font from resource: :/resources/Sora-VariableFont_wght.ttf")
+        # ---- End global font setup ----
 
         # Use the embedded QSS resource path
         self.theme_manager = ThemeManager(self.app, base_qss_path=":/resources/themes/base.qss")

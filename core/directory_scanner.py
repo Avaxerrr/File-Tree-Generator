@@ -1,5 +1,7 @@
 # directory_scanner.py
 
+# v0.7
+
 import os
 from pathlib import Path
 from typing import Dict, List, Optional

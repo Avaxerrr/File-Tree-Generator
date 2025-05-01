@@ -1,5 +1,7 @@
 # exclusion_panel.py
 
+# v0.7
+
 from PySide6.QtWidgets import (QWidget, QVBoxLayout, QHBoxLayout,
                                QPushButton, QListWidget, QLineEdit,
                                QLabel, QCheckBox, QGroupBox)

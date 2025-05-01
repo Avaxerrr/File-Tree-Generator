@@ -1,5 +1,7 @@
 #exclusion_manager.py
 
+# v0.7
+
 import re
 from typing import Set
 from pathlib import Path

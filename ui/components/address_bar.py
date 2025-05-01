@@ -1,5 +1,7 @@
 # address_bar.py
 
+# v0.7
+
 from PySide6.QtWidgets import QWidget, QHBoxLayout, QLineEdit, QPushButton, QFileDialog
 from PySide6.QtGui import QIcon
 from PySide6.QtCore import Signal

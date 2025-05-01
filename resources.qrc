@@ -3,5 +3,9 @@
     <file>resources/themes/base.qss</file>
     <file>resources/file_tree.png</file>
     <file>resources/refresh.png</file>
+    <file>resources/Sora-VariableFont_wght.ttf</file>
+    <file>resources/arrow-down-white.png</file>
+    <file>resources/arrow-up-white.png</file>
+    <file>resources/3-dots.png</file>
 </qresource>
 </RCC>

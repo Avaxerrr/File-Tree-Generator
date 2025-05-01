@@ -1,5 +1,7 @@
 #search_panel.py
 
+# v0.7
+
 from PySide6.QtWidgets import (QWidget, QHBoxLayout, QLineEdit,
                                QPushButton, QCheckBox, QLabel)
 from PySide6.QtCore import Signal
@@ -15,7 +17,7 @@ class SearchPanel(QWidget):
 
     def setup_ui(self):
         layout = QHBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setContentsMargins(0, 0, 9, 0)
 
         # Search label
         self.search_label = QLabel("Search:")

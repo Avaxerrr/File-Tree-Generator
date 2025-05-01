@@ -1,5 +1,7 @@
 # theme_manager.py
 
+# v0.7
+
 from PySide6.QtCore import QFile, QTextStream
 
 class ThemeManager:

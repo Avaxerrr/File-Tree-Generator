@@ -1,5 +1,7 @@
 # menu_bar.py
 
+# v0.7
+
 from PySide6.QtWidgets import QMenuBar, QMenu
 from PySide6.QtCore import Signal
 from PySide6.QtGui import QFont, QAction
