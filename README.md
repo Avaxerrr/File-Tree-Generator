@@ -2,7 +2,7 @@
 
 A modern, cross-platform tool for generating and exporting directory trees with exclusion support, search, and customizable formatting. Built with PySide6.
 
-![App Icon](resources/filetree.png)
+![image](https://github.com/user-attachments/assets/43a8d52c-c293-48c3-a9be-18a3607f6a82)
 
 ## Features
 
