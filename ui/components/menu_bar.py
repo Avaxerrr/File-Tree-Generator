@@ -4,8 +4,7 @@
 
 from PySide6.QtWidgets import QMenuBar, QMenu
 from PySide6.QtCore import Signal
-from PySide6.QtGui import QFont, QAction
-
+from PySide6.QtGui import QAction
 
 class MenuBar(QMenuBar):
     install_context_menu_requested = Signal()
@@ -48,14 +47,6 @@ class MenuBar(QMenuBar):
         self.install_context_action.triggered.connect(self.install_context_menu_requested)
         self.uninstall_context_action.triggered.connect(self.uninstall_context_menu_requested)
         self.about_action.triggered.connect(self.about_requested)
-
-        # Connect aboutToShow signal to update status
-        self.context_menu.aboutToShow.connect(self.update_context_menu_status)
-
-    def update_context_menu_status(self):
-        """Signal that the menu is about to be shown - status should be updated"""
-        # This will be connected to a method in MainWindow
-        pass
 
     def set_context_menu_status(self, is_installed):
         """Update the status text based on installation status"""
