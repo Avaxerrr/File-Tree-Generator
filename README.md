@@ -20,6 +20,9 @@ A modern, cross-platform tool for generating and exporting directory trees with 
 - Search for files/folders in the tree.
 - Export the tree to a text file.
 
+## Download
+Download the latest release [here](https://github.com/Avaxerrr/File-Tree-Generator/releases).
+
 ## Credits
 
 - **App icon by** [iyahicon](https://www.flaticon.com/authors/iyahicon) from [Flaticon](https://www.flaticon.com/).
