@@ -14,6 +14,7 @@ from core.tree_formatter import TreeFormatter
 from core.exclusion_manager import ExclusionManager
 from utils.file_exporter import FileExporter
 from utils.theme_manager import ThemeManager
+from utils.exclusion_config import load_exclusion_config, save_exclusion_config
 import resources_rc
 
 class FileTreeGeneratorApp:
@@ -22,8 +23,6 @@ class FileTreeGeneratorApp:
         self._set_app_icon()
 
         # ---- Global font setup (from qrc) ----
-        # Make sure the font is listed in your resources.qrc, e.g.:
-        # <file>resources/Sora-VariableFont_wght.ttf</file>
         font_id = QFontDatabase.addApplicationFont(":/resources/Sora-VariableFont_wght.ttf")
         if font_id != -1:
             families = QFontDatabase.applicationFontFamilies(font_id)
@@ -48,6 +47,9 @@ class FileTreeGeneratorApp:
         # Initialize exclusion manager
         self.exclusion_manager = ExclusionManager()
 
+        # Load exclusion config and apply to panel/manager
+        self._load_and_apply_exclusion_config()
+
         # Connect signals
         self.window.address_bar.path_changed.connect(self.generate_tree)
         self.window.address_bar.refresh_requested.connect(self.refresh_tree)
@@ -56,7 +58,9 @@ class FileTreeGeneratorApp:
         self.window.export_panel.export_requested.connect(self.export_tree)
         self.window.exclusion_panel.exclusions_changed.connect(self.update_exclusions)
 
-        # Initialize current path and tree data
+        # Ensure exclusion config is saved on app exit
+        self.app.aboutToQuit.connect(self._save_exclusion_config)
+
         self.current_path = ""
         self.tree_data = None
 
@@ -77,18 +81,44 @@ class FileTreeGeneratorApp:
                 # Set the path in the address bar and generate tree
                 self.window.address_bar.set_path(folder_path)
 
+    def _load_and_apply_exclusion_config(self):
+        """Load exclusions and checkbox state from config.json and apply to panel/manager"""
+        config = load_exclusion_config()
+        patterns = config.get("patterns", [])
+        use_common = config.get("use_common", True)
+        # Set UI panel
+        self.window.exclusion_panel.set_exclusion_patterns(patterns)
+        self.window.exclusion_panel.set_use_common_exclusions(use_common)
+        # Set backend manager
+        self.exclusion_manager.clear_patterns()
+        for pattern in patterns:
+            self.exclusion_manager.add_pattern(pattern)
+        self.exclusion_manager.set_use_common_exclusions(use_common)
+
+    def _save_exclusion_config(self):
+        """Save current exclusions and checkbox state to config.json"""
+        patterns = self.window.exclusion_panel.get_exclusion_patterns()
+        use_common = self.window.exclusion_panel.use_common_exclusions()
+        print(f"[LOG] Saving exclusion config: {len(patterns)} patterns, use_common={use_common}")
+        save_exclusion_config(patterns, use_common)
+        print("[LOG] Exclusion config saved successfully.")
+
     def update_exclusions(self):
         """Update exclusion patterns from the UI and regenerate tree"""
         # Update exclusion manager from UI
         self.exclusion_manager.clear_patterns()
         patterns = self.window.exclusion_panel.get_exclusion_patterns()
+        print(f"[LOG] Updating exclusions: {len(patterns)} patterns")
         for pattern in patterns:
             self.exclusion_manager.add_pattern(pattern)
 
         # Set common exclusions setting
-        self.exclusion_manager.set_use_common_exclusions(
-            self.window.exclusion_panel.use_common_exclusions()
-        )
+        use_common = self.window.exclusion_panel.use_common_exclusions()
+        print(f"[LOG] Use common exclusions: {use_common}")
+        self.exclusion_manager.set_use_common_exclusions(use_common)
+
+        # Save exclusions immediately on change
+        self._save_exclusion_config()
 
         # Regenerate tree if we have a path
         if self.current_path:
@@ -107,7 +137,6 @@ class FileTreeGeneratorApp:
 
             # Format and display the tree
             self.update_tree_format()
-
             self.window.set_status(f"Directory scanned successfully: {path}")
         except Exception as e:
             self.window.set_status(f"Error scanning directory: {str(e)}")

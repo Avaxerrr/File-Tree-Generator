@@ -117,3 +117,15 @@ class ExclusionPanel(QWidget):
     def use_common_exclusions(self) -> bool:
         """Check if common exclusions should be used"""
         return self.common_exclusions_cb.isChecked()
+
+    def set_exclusion_patterns(self, patterns: list):
+        """Set the list of exclusion patterns in the UI."""
+        self.exclusion_list.clear()
+        for pattern in patterns:
+            self.exclusion_list.addItem(pattern)
+        self._on_exclusions_changed()  # Optionally emit signal if you want
+
+    def set_use_common_exclusions(self, use: bool):
+        """Set the state of the 'Use common exclusions' checkbox."""
+        self.common_exclusions_cb.setChecked(use)
+        # self._on_exclusions_changed()  # Not needed, as toggling the checkbox emits the signal
